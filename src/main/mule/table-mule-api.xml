@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1a20e836-d3e1-457c-977c-176a5a4682e1" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="table-mule-apiFlow" doc:id="455179cc-c40a-41df-ad78-5fdbfd2da983" >
+		<http:listener doc:name="Listener" doc:id="e27b1bbb-70e2-405b-bbdd-7b78a7ded6a5" config-ref="HTTP_Listener_config" path="/table/{n}"/>
+		<set-variable value="#[attributes.uriParams.n]" doc:name="Set Variable" doc:id="37f4c8c3-04d0-4256-9e6f-db66034024d0" variableName="n"/>
+		<ee:transform doc:name="Transform Message" doc:id="b2622b6c-5489-434d-8917-ff2b6579b4d8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+1 to 10 map ( vars.n ++ "*" ++ $ ++ "=" ++ vars.n*$)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
