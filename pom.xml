@@ -29,8 +29,39 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				
+				<configuration>
+                    <classifier>mule-application</classifier>
+                    <cloudHubDeployment>
+                        <uri>https://anypoint.mulesoft.com</uri>
+                        <muleVersion>${application.runtimeVersion}</muleVersion>
+                        
+                        <username>${anypoint.username}</username>
+                        <password>${anypoint.password}</password>
+                        
+                        
+                        <applicationName>${application.name}</applicationName>
+                        <environment>${anypoint.platform.environment}</environment>
+                        <businessGroup>${business}</businessGroup>
+                        <region>${application.region}</region>
+                        <workers>${application.workers}</workers>
+                        <workerType>${application.workerType}</workerType>
+                        <connectedAppClientId>${connectedapp.clientid}</connectedAppClientId>
+                         <connectedAppClientSecret>${connectedapp.clientsecret}</connectedAppClientSecret>
+                         <connectedAppGrantType>client_credentials</connectedAppGrantType>
+                         <skipDeploymentVerification>true</skipDeploymentVerification>
+                        <objectStoreV2>true</objectStoreV2>
+                        <properties>
+                            <mule.env>${mule.env}</mule.env>
+                            <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+                            <anypoint.platform.client_id>${anypoint.platform.client.id}</anypoint.platform.client_id>
+                            <anypoint.platform.client_secret>${anypoint.platform.client.secret}</anypoint.platform.client_secret>
+                        </properties>
+                    </cloudHubDeployment>
+                </configuration>
 			</plugin>
 		</plugins>
+		
 	</build>
 
 	<dependencies>
